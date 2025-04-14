@@ -1,7 +1,7 @@
 import sys
 import pymongo
 
-# Подключение к MongoDBf
+# Подключение к MongoDB
 uri = f"mongodb://127.0.0.1:12341/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.1.5"
 try:
     client = pymongo.MongoClient(uri)
