@@ -6,7 +6,7 @@ on:
 
 jobs:
     build:
-        runs-on: [self-hosted, production]
+        runs-on: [self-hosted, production_v2]
 
         strategy:
             matrix:
