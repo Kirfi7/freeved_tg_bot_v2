@@ -12,22 +12,29 @@ except pymongo.errors.ConfigurationError:
 
 db = client.myDatabase
 
-collection_messages = "messages"
-if collection_messages not in db.list_collection_names():
-    db.create_collection(collection_messages)
-messages_collection = db[collection_messages]
+collection_users = "users"
+if collection_users not in db.list_collection_names():
+    db.create_collection(collection_users)
+users_collection = db[collection_users]
 
-collection_admins = "admins"
-if collection_admins not in db.list_collection_names():
-    db.create_collection(collection_admins)
-admins_collection = db[collection_admins]
 
-collection_blacklist = "blacklist"
-if collection_blacklist not in db.list_collection_names():
-    db.create_collection(collection_blacklist)
-blacklist_collection = db[collection_blacklist]
 
-collection_waiting = "waiting"
-if collection_waiting not in db.list_collection_names():
-    db.create_collection(collection_waiting)
-waiting_collection = db[collection_waiting]
+# collection_messages = "messages"
+# if collection_messages not in db.list_collection_names():
+#     db.create_collection(collection_messages)
+# messages_collection = db[collection_messages]
+#
+# collection_admins = "admins"
+# if collection_admins not in db.list_collection_names():
+#     db.create_collection(collection_admins)
+# admins_collection = db[collection_admins]
+#
+# collection_blacklist = "blacklist"
+# if collection_blacklist not in db.list_collection_names():
+#     db.create_collection(collection_blacklist)
+# blacklist_collection = db[collection_blacklist]
+#
+# collection_waiting = "waiting"
+# if collection_waiting not in db.list_collection_names():
+#     db.create_collection(collection_waiting)
+# waiting_collection = db[collection_waiting]
