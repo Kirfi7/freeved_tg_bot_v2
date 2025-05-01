@@ -1,5 +1,5 @@
 from aiogram import F, Router
-from aiogram.types import CallbackQuery
+from aiogram.types import CallbackQuery, Message
 from aiogram.filters import StateFilter
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
@@ -34,5 +34,8 @@ async def handle_publication_type(callback: CallbackQuery, state: FSMContext):
 
 
 @router.message(StateFilter(Publication.text))
-async def handle_publication_text(callback: CallbackQuery, state: FSMContext):
-    ...
+async def handle_publication_text(message: Message, state: FSMContext):
+    # Сформировать PostInit, сохранить в БД
+    # Проверить кол-во публикаций пользователя
+    # Отправить админу, либо в канал
+    pass

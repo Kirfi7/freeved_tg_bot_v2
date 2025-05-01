@@ -20,6 +20,7 @@ class PostInit(BaseModel):
     author_username: Optional[str]
     post_type: Literal['Помогите советом', 'Обратите внимание']
     attachment: Optional[PostAttachment] = None
+    post_text: str
 
 
 class Post(PostInit):
