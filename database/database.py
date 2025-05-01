@@ -22,6 +22,11 @@ if topics_collection_name not in db.list_collection_names():
     db.create_collection(topics_collection_name)
 topics_collection = db[topics_collection_name]
 
+posts_collection_name = "posts"
+if posts_collection_name not in db.list_collection_names():
+    db.create_collection(posts_collection_name)
+posts_collection = db[posts_collection_name]
+
 
 # collection_messages = "messages"
 # if collection_messages not in db.list_collection_names():

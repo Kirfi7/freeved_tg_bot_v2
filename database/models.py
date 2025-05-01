@@ -1,5 +1,6 @@
-from typing import Literal, Optional
+from typing import Literal, Optional, List
 from pydantic import BaseModel
+
 
 
 class User(BaseModel):
@@ -9,14 +10,20 @@ class User(BaseModel):
     is_banned: bool = False
 
 
-class Post(BaseModel):
-    id: int
+class PostAttachment(BaseModel):
+    file_type: str
+    file_id: str
+
+
+class PostInit(BaseModel):
     author_id: int
     author_username: Optional[str]
     post_type: Literal['Помогите советом', 'Обратите внимание']
-    is_published: bool
+    attachment: Optional[PostAttachment] = None
 
 
-class CommentSub(BaseModel):
-    comment_id: int
-    subscriber_id: int
+class Post(PostInit):
+    id: int
+    telegram_id: int
+    is_published: bool = False
+    comment_subscribers: Optional[List[int]] = None
