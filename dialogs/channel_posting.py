@@ -5,6 +5,7 @@ from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 
 from database.services.users import UsersDB
+from database.services.posts import PostsDB
 
 from markups import get_choice_markup
 

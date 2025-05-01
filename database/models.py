@@ -24,6 +24,6 @@ class PostInit(BaseModel):
 
 class Post(PostInit):
     id: int
-    telegram_id: int
+    telegram_id: Optional[int] = None
     is_published: bool = False
     comment_subscribers: Optional[List[int]] = None
