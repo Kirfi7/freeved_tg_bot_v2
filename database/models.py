@@ -4,9 +4,9 @@ from pydantic import BaseModel
 
 class User(BaseModel):
     telegram_id: int
-    telegram_username: Optional[str]
-    is_verified: bool
-    is_banned: bool
+    telegram_username: Optional[str] = None
+    is_verified: bool = False
+    is_banned: bool = False
 
 
 class Post(BaseModel):
