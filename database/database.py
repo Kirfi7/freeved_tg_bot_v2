@@ -12,11 +12,15 @@ except pymongo.errors.ConfigurationError:
 
 db = client.myDatabase
 
-collection_users = "users"
-if collection_users not in db.list_collection_names():
-    db.create_collection(collection_users)
-users_collection = db[collection_users]
+users_collection_name = "users"
+if users_collection_name not in db.list_collection_names():
+    db.create_collection(users_collection_name)
+users_collection = db[users_collection_name]
 
+topics_collection_name = "topics"
+if topics_collection_name not in db.list_collection_names():
+    db.create_collection(topics_collection_name)
+topics_collection = db[topics_collection_name]
 
 
 # collection_messages = "messages"
