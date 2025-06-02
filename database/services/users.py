@@ -1,4 +1,4 @@
-from database.database import users_collection
+from database.database import users_collection, posts_collection
 from database.models import User
 
 class UsersDB:
@@ -10,6 +10,10 @@ class UsersDB:
     @staticmethod
     def get_user(user_id):
         return users_collection.find_one({"telegram_id": user_id})
+
+    @staticmethod
+    def get_messages_count(user_id):
+        return posts_collection.count_documents({"author_id": user_id})
 
     @staticmethod
     def ban_user(user_id):

@@ -64,6 +64,9 @@ async def handle_publication_text(message: Message, state: FSMContext):
         post_text=message_text,
         attachment=attachment,
     )
-    PostsDB.init_post(post_data)
+    print(PostsDB.init_post(post_data))
+    pub_count = UsersDB.get_messages_count(message.from_user.id)
+    print(pub_count)
+    # post_final_data = PostsDB.get_post()
     # Проверить кол-во публикаций пользователя
     # Отправить админу, либо в канал

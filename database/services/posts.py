@@ -7,7 +7,7 @@ class PostsDB:
     def init_post(data: PostInit):
         post_id: int = (posts_collection.find_one({}, {"sort": {"id": -1}})).get("id")
         insert_data = Post(**data.model_dump(), id=post_id)
-        posts_collection.insert_one(insert_data.model_dump())
+        return posts_collection.insert_one(insert_data.model_dump())
 
     @staticmethod
     def publish_post(post_id: int, telegram_id: int):
