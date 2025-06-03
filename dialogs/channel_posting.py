@@ -18,13 +18,13 @@ class Publication(StatesGroup):
 router = Router()
 
 
-@router.callback_query()
+@router.callback_query(F.data == "publication")
 async def start_publication(callback: CallbackQuery):
     markup = await get_choice_markup()
     await callback.message.edit_text("Выберите тип публикации:", reply_markup=markup)
 
 
-@router.callback_query(F.callback_data.startswith("type"))
+@router.callback_query(F.data.startswith("type"))
 async def handle_publication_type(callback: CallbackQuery, state: FSMContext):
     pub_type: str = callback.data.split(":")[1]
     answer = f"Выбранный тип публикации: «{pub_type}»\n"
