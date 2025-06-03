@@ -18,7 +18,7 @@ class Publication(StatesGroup):
 router = Router()
 
 
-@router.callback_query(F.callback_data == "publication")
+@router.callback_query()
 async def start_publication(callback: CallbackQuery):
     markup = await get_choice_markup()
     await callback.message.edit_text("Выберите тип публикации:", reply_markup=markup)
