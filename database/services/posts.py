@@ -5,7 +5,9 @@ class PostsDB:
 
     @staticmethod
     def init_post(data: PostInit):
-        post_id: int = (posts_collection.find_one({}, {"sort": {"id": -1}})).get("id")
+        post_id: int = 1
+        if post := posts_collection.find_one({}, {"sort": {"id": -1}}):
+            post_id = post.get("id")
         insert_data = Post(**data.model_dump(), id=post_id)
         return posts_collection.insert_one(insert_data.model_dump())
 
