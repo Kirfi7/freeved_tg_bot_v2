@@ -62,7 +62,8 @@ class Publisher:
         return msg.message_id
 
     async def __get_from_db(self) -> Post:
-        return PostsDB.get_post(post_id=self.post_id)
+        data = PostsDB.get_post(post_id=self.post_id)
+        return Post(**data)
 
     @staticmethod
     async def __create_text(post, count) -> str:
