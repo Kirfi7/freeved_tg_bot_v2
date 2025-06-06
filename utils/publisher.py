@@ -67,10 +67,10 @@ class Publisher:
 
     @staticmethod
     async def __create_text(post, count) -> str:
-        text = (f'Номер сообщения: {post.id}'
-                f'Вид сообщения: {post.post_type}'
-                f'Кол-во сообщений пользователя: {count}'
-                f'Идентификатор пользователя: {post.author_id}'
-                f'Имя пользователя: {post.author_username or "Нет"}'
-                f'Текст сообщения:\n\n{post.post_text}')
+        text = (f'Номер сообщения: {post.id}\n'
+                f'Вид сообщения: {post.post_type}\n'
+                f'Кол-во сообщений пользователя: {count}\n'
+                f'Идентификатор пользователя: {post.author_id}\n'
+                f'Имя пользователя: {post.author_username or "Нет"}\n\n'
+                f'Текст сообщения:\n{post.post_text}')
         return text.strip()
