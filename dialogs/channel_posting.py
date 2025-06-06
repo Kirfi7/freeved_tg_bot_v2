@@ -9,6 +9,7 @@ from database.services.users import UsersDB
 from database.services.posts import PostsDB
 
 from markups import get_choice_markup
+from utils.publisher import Publisher
 
 
 class Publication(StatesGroup):
@@ -67,6 +68,8 @@ async def handle_publication_text(message: Message, state: FSMContext):
     post_id = PostsDB.init_post(post_data)
     pub_count = UsersDB.get_messages_count(message.from_user.id)
 
+    publisher = Publisher(post_id, pub_count)
+
     if pub_count > 2:
-        post_final_data = PostsDB.get_post(post_id)
-        print(post_final_data)
+        return await publisher.to_prod()
+    await publisher.to_admin()
