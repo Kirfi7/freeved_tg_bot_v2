@@ -8,6 +8,7 @@ from aiogram.fsm.storage.memory import MemoryStorage
 
 from database.services.users import UsersDB
 from dialogs import base_router
+from filters.ban_filters import MSGFilter, CBFilter
 
 
 async def main():
@@ -16,8 +17,8 @@ async def main():
 
     dp.include_router(base_router)
 
-    dp.message.filter(not UsersDB.is_banned(F.from_user.id))
-    dp.callback_query.filter(not UsersDB.is_banned(F.from_user.id))
+    dp.message.filter(MSGFilter())
+    dp.callback_query.filter(CBFilter())
 
     print("Бот запущен успешно!")
     await bot.delete_webhook(True)
