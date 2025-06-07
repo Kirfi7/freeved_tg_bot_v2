@@ -7,6 +7,7 @@ from database.services.users import UsersDB
 class CBFilter(Filter):
     async def __call__(self, callback: CallbackQuery):
         if UsersDB.is_banned(callback.message.from_user.id):
+            print('banned')
             return False
         return True
 
