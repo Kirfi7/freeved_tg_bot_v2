@@ -32,7 +32,7 @@ class Publisher:
         """
         post = await self.__get_from_db()
         msgs_cnt = await self.__get_messages_count(post.author_id)
-        text = await self.__create_text(post, msgs_cnt)
+        text = await self.__create_text(post, msgs_cnt + 1)
 
         msg_id = await self.__publish(config.CHANNEL, post, text)
         PostsDB.publish_post(post.id, msg_id)
