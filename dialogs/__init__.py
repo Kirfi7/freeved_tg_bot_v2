@@ -17,5 +17,5 @@ async def start_bot(message: Message):
 
 
 base_router.include_router(channel_posting)
-base_router.include_router(admin_conversation)
 base_router.include_router(admin_choices)
+base_router.include_router(admin_conversation)
