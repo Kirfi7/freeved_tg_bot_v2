@@ -5,14 +5,14 @@ from aiogram.types import InlineKeyboardMarkup
 
 from database.models import Post
 from database.services.posts import PostsDB
+from database.services.users import UsersDB
 from markups import get_approve_markup
 
 bot = Bot(config.TOKEN)
 
 
 class Publisher:
-    def __init__(self, post_id: int, msgs_count: int):
-        self.msgs_count = msgs_count
+    def __init__(self, post_id: int):
         self.post_id = post_id
 
     async def to_admin(self) -> None:
@@ -20,7 +20,8 @@ class Publisher:
         Сообщение на модерацию
         """
         post = await self.__get_from_db()
-        text = await self.__create_text(post, self.msgs_count)
+        msgs_cnt = await self.__get_messages_count(post.author_id)
+        text = await self.__create_text(post, msgs_cnt)
 
         markup = await get_approve_markup(post.id, post.author_id)
         await self.__publish(config.ADMIN, post, text, markup)
@@ -30,10 +31,15 @@ class Publisher:
         Публикует сообщение в канал
         """
         post = await self.__get_from_db()
-        text = await self.__create_text(post, self.msgs_count)
+        msgs_cnt = await self.__get_messages_count(post.author_id)
+        text = await self.__create_text(post, msgs_cnt)
 
         msg_id = await self.__publish(config.CHANNEL, post, text)
         PostsDB.publish_post(post.id, msg_id)
+
+    @staticmethod
+    async def __get_messages_count(author_id: int) -> int:
+        return await UsersDB.get_messages_count(author_id)
 
     @staticmethod
     async def __publish(chat_id: int, post: Post, text: str, markup: InlineKeyboardMarkup = None):

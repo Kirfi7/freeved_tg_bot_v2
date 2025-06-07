@@ -68,7 +68,7 @@ async def handle_publication_text(message: Message, state: FSMContext):
     post_id = PostsDB.init_post(post_data)
     pub_count = UsersDB.get_messages_count(message.from_user.id)
 
-    publisher = Publisher(post_id, pub_count)
+    publisher = Publisher(post_id)
 
     if pub_count > 2:
         return await publisher.to_prod()
