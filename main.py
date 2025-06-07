@@ -3,9 +3,10 @@ import asyncio
 import logging
 import config
 
-from aiogram import Bot, Dispatcher
+from aiogram import Bot, Dispatcher, F
 from aiogram.fsm.storage.memory import MemoryStorage
 
+from database.services.users import UsersDB
 from dialogs import base_router
 
 
@@ -15,8 +16,8 @@ async def main():
 
     dp.include_router(base_router)
 
-    # dp.message.filter(IsNotBannedMSG())
-    # dp.callback_query.filter(IsNotBannedCB())
+    dp.message.filter(not UsersDB.is_banned(F.from_user.id))
+    dp.callback_query.filter(not UsersDB.is_banned(F.from_user.id))
 
     print("Бот запущен успешно!")
     await bot.delete_webhook(True)
