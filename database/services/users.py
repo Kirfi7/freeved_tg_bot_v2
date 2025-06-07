@@ -13,7 +13,7 @@ class UsersDB:
 
     @staticmethod
     def get_messages_count(user_id):
-        return posts_collection.count_documents({"author_id": user_id})
+        return posts_collection.count_documents({"author_id": user_id, "is_published": True})
 
     @staticmethod
     def ban_user(user_id):
