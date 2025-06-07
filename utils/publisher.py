@@ -39,7 +39,7 @@ class Publisher:
 
     @staticmethod
     async def __get_messages_count(author_id: int) -> int:
-        return await UsersDB.get_messages_count(author_id)
+        return UsersDB.get_messages_count(author_id)
 
     @staticmethod
     async def __publish(chat_id: int, post: Post, text: str, markup: InlineKeyboardMarkup = None):
