@@ -5,6 +5,7 @@ from aiogram.types import Message
 from markups import get_menu_markup
 from .admin_conversation import router as admin_conversation
 from .channel_posting import router as channel_posting
+from .admin_choices import router as admin_choices
 
 base_router = Router()
 
@@ -15,5 +16,6 @@ async def start_bot(message: Message):
     await message.answer(text="Выберите действие:", reply_markup=markup)
 
 
-base_router.include_router(admin_conversation)
 base_router.include_router(channel_posting)
+base_router.include_router(admin_conversation)
+base_router.include_router(admin_choices)
