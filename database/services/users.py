@@ -24,7 +24,9 @@ class UsersDB:
 
     @staticmethod
     def is_banned(user_id):
-        return (users_collection.find_one({"telegram_id": user_id})).get("is_banned") or False
+        if user := users_collection.find_one({"telegram_id": user_id}):
+            return user.get("is_banned") or False
+        return False
 
     @staticmethod
     def verify_user(user_id):
