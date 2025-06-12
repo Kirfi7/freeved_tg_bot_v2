@@ -8,7 +8,7 @@ class PostsDB:
         post_id: int = 1
         if post := posts_collection.find_one({}, {"sort": {"id": -1}}):
             if id := post.get("id"):
-                post_id = id
+                post_id = id + 1
         insert_data = Post(**data.model_dump(), id=post_id)
         posts_collection.insert_one(insert_data.model_dump())
         return post_id
