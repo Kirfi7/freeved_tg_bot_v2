@@ -4,7 +4,6 @@ from aiogram.filters import StateFilter
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 
-import config
 from database.models import PostInit, PostAttachment
 from database.services.users import UsersDB
 from database.services.posts import PostsDB
@@ -12,6 +11,8 @@ from database.services.posts import PostsDB
 from markups import get_choice_markup
 from utils.notifier import Notifier
 from utils.publisher import Publisher
+
+import config
 
 
 class Publication(StatesGroup):
@@ -84,10 +85,7 @@ async def handle_publication_text(message: Message, state: FSMContext):
 async def get_comment_object(message: Message):
     if message.reply_to_message:
         post_id = message.reply_to_message.forward_from_message_id
-        channel_name = message.reply_to_message.forward_from_chat.title
-        link = F'https://t.me/{channel_name}/{post_id}'
-
-        print(message.reply_to_message.forward_from_chat)
+        link = F'https://t.me/{config.LINK_ID}/{post_id}'
 
         post_object = PostsDB.get_post_by_tg(post_id)
 

@@ -22,6 +22,6 @@ class Notifier:
 
         for subscriber in subscribers:
             try:
-                await bot.send_message(subscriber, link)
+                await bot.send_message(subscriber, f"Под постом оставили новый комментарий:\n{link}")
             except TelegramForbiddenError:
                 pass
