@@ -4,11 +4,13 @@ from aiogram.filters import StateFilter
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
 
+import config
 from database.models import PostInit, PostAttachment
 from database.services.users import UsersDB
 from database.services.posts import PostsDB
 
 from markups import get_choice_markup
+from utils.notifier import Notifier
 from utils.publisher import Publisher
 
 
@@ -65,6 +67,7 @@ async def handle_publication_text(message: Message, state: FSMContext):
         post_type=fsm_data.get("pub_type"),
         post_text=message_text,
         attachment=attachment,
+        comment_subscribers=[message.from_user.id,],
     )
     post_id = PostsDB.init_post(post_data)
     pub_count = UsersDB.get_messages_count(message.from_user.id)
@@ -74,4 +77,19 @@ async def handle_publication_text(message: Message, state: FSMContext):
 
     if pub_count > 2:
         return await publisher.to_prod()
-    await publisher.to_admin()
+    return await publisher.to_admin()
+
+
+@router.message(F.chat.id == config.GROUP)
+async def get_comment_object(message: Message):
+    if message.reply_to_message:
+        post_id = message.reply_to_message.forward_from_message_id
+        channel_name = message.reply_to_message.forward_from_chat.title
+        link = F'https://t.me/{channel_name}/{post_id}'
+
+        post_object = PostsDB.get_post_by_tg(post_id)
+
+        notifier = Notifier(post_object.get("id"))
+        await notifier.notify(message.from_user.id, link)
+    else:
+        pass

@@ -20,10 +20,10 @@ class PostInit(BaseModel):
     post_type: Literal['Помогите советом', 'Обратите внимание']
     attachment: Optional[PostAttachment] = None
     post_text: str
+    comment_subscribers: List[int]
 
 
 class Post(PostInit):
     id: int
     telegram_id: Optional[int] = None
     is_published: bool = False
-    comment_subscribers: Optional[List[int]] = None

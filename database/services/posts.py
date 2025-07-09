@@ -18,9 +18,17 @@ class PostsDB:
         }})
 
     @staticmethod
-    def get_post(post_id: int):
-        return posts_collection.find_one({"id": post_id})
+    def get_post_by_tg(tg_post_id: int):
+        return posts_collection.find_one({"telegram_id": tg_post_id})
 
     @staticmethod
     def del_post(post_id: int):
         return posts_collection.delete_one({"id": post_id})
+
+    @staticmethod
+    def add_post_sub(post_id: int, telegram_id: int):
+        ...
+
+    @staticmethod
+    def get_post_subs(post_id: int):
+        ...
