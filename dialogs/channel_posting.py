@@ -87,6 +87,8 @@ async def get_comment_object(message: Message):
         channel_name = message.reply_to_message.forward_from_chat.title
         link = F'https://t.me/{channel_name}/{post_id}'
 
+        print(message.reply_to_message.forward_from_chat)
+
         post_object = PostsDB.get_post_by_tg(post_id)
 
         notifier = Notifier(post_object.get("id"))

@@ -1,3 +1,5 @@
+from aiogram.exceptions import TelegramForbiddenError
+
 import config
 
 from aiogram import Bot
@@ -19,4 +21,7 @@ class Notifier:
             PostsDB.add_post_sub(self.post_id, comment_author_id)
 
         for subscriber in subscribers:
-            await bot.send_message(subscriber, link)
+            try:
+                await bot.send_message(subscriber, link)
+            except TelegramForbiddenError:
+                pass
