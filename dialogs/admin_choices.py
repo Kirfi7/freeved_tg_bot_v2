@@ -21,7 +21,7 @@ async def publish(call: CallbackQuery):
 async def cancel(call: CallbackQuery):
     await call.message.delete_reply_markup()
     _, post_id = call.data.split(":")
-    await PostsDB.del_post(int(post_id))
+    PostsDB.del_post(int(post_id))
     await call.message.reply("Сообщение успешно удалено!")
 
 
@@ -29,7 +29,6 @@ async def cancel(call: CallbackQuery):
 async def ban(call: CallbackQuery):
     await call.message.delete_reply_markup()
     _, post_id, user_id = call.data.split(":")
-    print(post_id, user_id)
-    await PostsDB.del_post(int(post_id))
-    await UsersDB.ban_user(int(user_id))
+    PostsDB.del_post(int(post_id))
+    UsersDB.ban_user(int(user_id))
     await call.message.reply("Сообщение успешно удалено! Пользователь заблокирован.")
