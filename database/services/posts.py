@@ -6,8 +6,7 @@ class PostsDB:
     @staticmethod
     def init_post(data: PostInit):
         max_doc = posts_collection.find_one(sort=[("id", -1)])
-        print(max_doc)
-        post_id = max_doc['id'] if max_doc else 1
+        post_id = max_doc['id'] + 1 if max_doc else 1
         insert_data = Post(**data.model_dump(), id=post_id)
         posts_collection.insert_one(insert_data.model_dump())
         return post_id
