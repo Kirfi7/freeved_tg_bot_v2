@@ -9,6 +9,7 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from database.services.users import UsersDB
 from dialogs import base_router
 from filters.ban_filters import MSGFilter, CBFilter
+from mddleware.users_middleware import UsersMiddleware
 
 
 async def main():
@@ -17,8 +18,9 @@ async def main():
 
     dp.include_router(base_router)
 
-    dp.message.filter(MSGFilter())
-    dp.callback_query.filter(CBFilter())
+    # dp.message.filter(MSGFilter())
+    # dp.callback_query.filter(CBFilter())
+    dp.update.middleware(UsersMiddleware())
 
     print("Бот запущен успешно!")
     await bot.delete_webhook(True)
