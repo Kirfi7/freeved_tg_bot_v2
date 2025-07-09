@@ -8,11 +8,10 @@ class PostsDB:
     @staticmethod
     def init_post(data: PostInit):
         post_id: int = 1
-        posts = posts_collection.find()
-        print('posts', posts)
-
+        posts = posts_collection.find().sort('id', -1).limit(1)
+        print(posts)
         if posts:
-            post_id = posts[0]['id'] + 1
+            post_id = posts.next()['id']
         insert_data = Post(**data.model_dump(), id=post_id)
         posts_collection.insert_one(insert_data.model_dump())
         return post_id
