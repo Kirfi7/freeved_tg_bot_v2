@@ -27,8 +27,12 @@ class PostsDB:
 
     @staticmethod
     def add_post_sub(post_id: int, telegram_id: int):
-        ...
+        posts_collection.update_one(
+            {'id': post_id},
+            {'$push': {'comment_subscribers': telegram_id}}
+        )
 
     @staticmethod
     def get_post_subs(post_id: int):
-        ...
+        post = posts_collection.find_one({"id": post_id})
+        return post.get('comment_subscribers')
