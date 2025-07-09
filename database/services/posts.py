@@ -1,5 +1,3 @@
-import pymongo
-
 from database.database import posts_collection
 from database.models import Post, PostInit
 
@@ -7,11 +5,9 @@ class PostsDB:
 
     @staticmethod
     def init_post(data: PostInit):
-        post_id: int = 1
-        posts = posts_collection.find().sort('id', -1).limit(1)
-        print(posts)
-        if posts:
-            post_id = posts.next()['id']
+        max_doc = posts_collection.find_one(sort=[("id", -1)])
+        print(max_doc)
+        post_id = max_doc['id'] if max_doc else 1
         insert_data = Post(**data.model_dump(), id=post_id)
         posts_collection.insert_one(insert_data.model_dump())
         return post_id
