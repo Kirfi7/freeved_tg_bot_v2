@@ -68,6 +68,7 @@ async def handle_publication_text(message: Message, state: FSMContext):
     )
     post_id = PostsDB.init_post(post_data)
     pub_count = UsersDB.get_messages_count(message.from_user.id)
+    print("pub_count", pub_count)
 
     publisher = Publisher(post_id)
 
