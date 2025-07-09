@@ -27,10 +27,3 @@ class UsersDB:
         if user := users_collection.find_one({"telegram_id": user_id}):
             return user.get("is_banned") or False
         return False
-
-    @staticmethod
-    def verify_user(user_id):
-        return users_collection.update_one(
-            {"telegram_id": user_id},
-            {"$set": {"is_verified": True}}
-        )

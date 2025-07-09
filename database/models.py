@@ -5,7 +5,6 @@ from pydantic import BaseModel
 
 class User(BaseModel):
     telegram_id: int
-    is_verified: bool = False
     is_banned: bool = False
 
 
