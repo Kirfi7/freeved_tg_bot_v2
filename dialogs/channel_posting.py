@@ -38,6 +38,7 @@ async def handle_publication_type(callback: CallbackQuery, state: FSMContext):
 @router.message(StateFilter(Publication.text))
 async def handle_publication_text(message: Message, state: FSMContext):
     fsm_data = await state.get_data()
+    await state.clear()
 
     if message.content_type == "document":
         attachment = PostAttachment(
