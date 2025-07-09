@@ -18,6 +18,10 @@ class PostsDB:
         }})
 
     @staticmethod
+    def get_post(post_id: int):
+        return posts_collection.find_one({"id": post_id})
+
+    @staticmethod
     def get_post_by_tg(tg_post_id: int):
         return posts_collection.find_one({"telegram_id": tg_post_id})
 
