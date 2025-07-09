@@ -18,8 +18,7 @@ class UsersMiddleware(BaseMiddleware):
         event: TelegramObject,
         data: Dict[str, Any]
     ):
-        user_id: int = data.event_from_user.id
-
+        user_id: int = data.get("event_from_user").id
         user = UsersDB.get_user(user_id)
 
         if user is None:
