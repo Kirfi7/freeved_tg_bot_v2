@@ -8,7 +8,7 @@ class PostsDB:
     @staticmethod
     def init_post(data: PostInit):
         post_id: int = 1
-        posts = posts_collection.find().sort('id', pymongo.ASCENDING)
+        posts = posts_collection.find()
         print('posts', posts)
 
         if posts:
