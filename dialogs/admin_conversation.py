@@ -52,7 +52,8 @@ async def contact_with_user_by_call(message: Message, target_tg_id: int):
 async def accepted_contact(callback: CallbackQuery, state: FSMContext, target_tg_id: int):
     await state.set_state(Messanger.message_text)
     await state.update_data({"user_id": target_tg_id})
-    await callback.message.answer("Введите текст вашего сообщения для пользователя:")
+    who = "администратора" if target_tg_id == config.ADMIN else "пользователя"
+    await callback.message.answer(f"Введите текст вашего сообщения для {who}:")
     await callback.answer()
 
 
