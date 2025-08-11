@@ -52,7 +52,7 @@ async def handle_publication_text(message: Message, state: FSMContext):
     elif message.content_type == "photo":
         attachment = PostAttachment(
             file_type="photo",
-            file_id=message.document.file_id
+            file_id=message.photo[-1].file_id
         )
         message_text = message.caption
     elif message.content_type == "text":
