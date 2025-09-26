@@ -39,7 +39,7 @@ async def fsm_ban(msg: Message, state: FSMContext):
     if not _is_admin(msg.from_user.id):
         return await msg.answer("Нет прав.")
     if not msg.text.isdigit():
-        return await msg.answer("Введите числовой telegram_id.")
+        return await msg.answer("Введите числовой индентификатор пользователя.")
     telegram_id = int(msg.text)
     if not UsersDB.get_user(telegram_id):
         await state.clear()
@@ -54,7 +54,7 @@ async def fsm_unban(msg: Message, state: FSMContext):
     if not _is_admin(msg.from_user.id):
         return await msg.answer("Нет прав.")
     if not msg.text.isdigit():
-        return await msg.answer("Введите числовой telegram_id.")
+        return await msg.answer("Введите числовой индентификатор пользователя.")
     telegram_id = int(msg.text)
     if not UsersDB.get_user(telegram_id):
         await state.clear()
