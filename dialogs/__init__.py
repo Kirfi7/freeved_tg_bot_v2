@@ -12,7 +12,7 @@ base_router = Router()
 
 @base_router.message(CommandStart())
 async def start_bot(message: Message):
-    markup = await get_menu_markup()
+    markup = await get_menu_markup(message)
     await message.answer(text="Выберите действие:", reply_markup=markup)
 
 
