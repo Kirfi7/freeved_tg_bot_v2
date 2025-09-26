@@ -45,7 +45,7 @@ async def fsm_ban(msg: Message, state: FSMContext):
         await state.clear()
         return await msg.answer(f"Пользователь {telegram_id} не найден.")
     UsersDB.ban_user(telegram_id)
-    await msg.answer(f"Пользователь {telegram_id} заблокирован ✅")
+    await msg.answer(f"Пользователь {telegram_id} заблокирован.")
     await state.clear()
 
 
@@ -60,5 +60,5 @@ async def fsm_unban(msg: Message, state: FSMContext):
         await state.clear()
         return await msg.answer(f"Пользователь {telegram_id} не найден.")
     UsersDB.unban_user(telegram_id)
-    await msg.answer(f"Пользователь {telegram_id} разблокирован ✅")
+    await msg.answer(f"Пользователь {telegram_id} разблокирован.")
     await state.clear()
