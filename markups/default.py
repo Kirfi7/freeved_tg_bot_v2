@@ -12,8 +12,8 @@ async def get_menu_markup(message: Message) -> InlineKeyboardMarkup:
 
     if message.from_user.id == config.ADMIN:
         buttons += [
-            [InlineKeyboardButton(text="Заблокировать пользователя", callback_data="ban")],
-            [InlineKeyboardButton(text="Разблокировать пользователя", callback_data="unban")]
+            [InlineKeyboardButton(text="Заблокировать пользователя", callback_data="user_ban")],
+            [InlineKeyboardButton(text="Разблокировать пользователя", callback_data="user_unban")]
         ]
 
     return InlineKeyboardMarkup(inline_keyboard=buttons)

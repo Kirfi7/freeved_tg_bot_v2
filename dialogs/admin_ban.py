@@ -19,7 +19,7 @@ def _is_admin(uid: int) -> bool:
 # Вариант 1 — КНОПКИ МЕНЮ
 # ==========================
 
-@router.callback_query(F.data == "ban")
+@router.callback_query(F.data == "user_ban")
 async def cb_ban(cb: CallbackQuery, state: FSMContext):
     if not _is_admin(cb.from_user.id):
         return await cb.answer("Нет прав", show_alert=True)
@@ -27,13 +27,15 @@ async def cb_ban(cb: CallbackQuery, state: FSMContext):
     await cb.message.answer("Введите telegram_id для блокировки:", reply_markup=ForceReply())
     await cb.answer()
 
-@router.callback_query(F.data == "unban")
+
+@router.callback_query(F.data == "user_unban")
 async def cb_unban(cb: CallbackQuery, state: FSMContext):
     if not _is_admin(cb.from_user.id):
         return await cb.answer("Нет прав", show_alert=True)
     await state.set_state(AdminFSM.waiting_unban_id)
     await cb.message.answer("Введите telegram_id для разблокировки:", reply_markup=ForceReply())
     await cb.answer()
+
 
 @router.message(AdminFSM.waiting_ban_id)
 async def fsm_ban(msg: Message, state: FSMContext):
@@ -48,6 +50,7 @@ async def fsm_ban(msg: Message, state: FSMContext):
     UsersDB.ban_user(telegram_id)
     await msg.answer(f"Пользователь {telegram_id} заблокирован ✅")
     await state.clear()
+
 
 @router.message(AdminFSM.waiting_unban_id)
 async def fsm_unban(msg: Message, state: FSMContext):
