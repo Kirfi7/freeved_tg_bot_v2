@@ -26,7 +26,7 @@ class Publisher:
         markup = await get_approve_markup(post.id, post.author_id)
         await self.__publish(config.ADMIN, post, text, markup)
 
-    async def to_prod(self) -> None:
+    async def to_prod(self) -> int:
         """
         Публикует сообщение в канал
         """
@@ -36,6 +36,7 @@ class Publisher:
 
         msg_id = await self.__publish(config.CHANNEL, post, text)
         PostsDB.publish_post(post.id, msg_id)
+        return msg_id
 
     @staticmethod
     async def __get_messages_count(author_id: int) -> int:
