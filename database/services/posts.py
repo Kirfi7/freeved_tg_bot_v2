@@ -19,7 +19,8 @@ class PostsDB:
 
     @staticmethod
     def get_post(post_id: int) -> Post:
-        return posts_collection.find_one({"id": post_id})
+        d = posts_collection.find_one({"id": post_id})
+        return Post(**d)
 
     @staticmethod
     def get_post_by_tg(tg_post_id: int) -> Post:
