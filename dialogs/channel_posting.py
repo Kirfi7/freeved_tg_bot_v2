@@ -79,7 +79,6 @@ async def handle_publication_text(message: Message, state: FSMContext):
 
     # Проверка лимита
     recent_count = PostsDB.count_last_24h(message.from_user.id)
-    print('recent_count', recent_count)
     if recent_count >= 3:
         return await message.answer('Можно опубликовать не более 3 постов за последние 24 часа.')
 
