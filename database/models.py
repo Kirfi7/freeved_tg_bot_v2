@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Literal, Optional, List
 from pydantic import BaseModel
 
@@ -26,3 +27,4 @@ class Post(PostInit):
     id: int
     telegram_id: Optional[int] = None
     is_published: bool = False
+    publish_at: Optional[datetime] = None

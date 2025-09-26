@@ -16,6 +16,11 @@ async def publish(call: CallbackQuery):
     post_id = int(post_id)
     author_id = PostsDB.get_post(post_id).author_id
 
+    # Проверка лимита
+    recent_count = PostsDB.count_last_24h(author_id)
+    if recent_count >= 3:
+        return await call.message.answer('Можно опубликовать не более 3 постов за последние 24 часа.')
+
     publisher = Publisher(post_id)
     msg_id = await publisher.to_prod()
 

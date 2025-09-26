@@ -1,3 +1,5 @@
+from datetime import datetime, timezone, timedelta
+
 from database.database import posts_collection
 from database.models import Post, PostInit
 
@@ -14,7 +16,7 @@ class PostsDB:
     @staticmethod
     def publish_post(post_id: int, telegram_id: int):
         posts_collection.update_one({"id": post_id}, {"$set": {
-            "telegram_id": telegram_id, "is_published": True
+            "telegram_id": telegram_id, "is_published": True, "publish_at": datetime.now(timezone.utc)
         }})
 
     @staticmethod
@@ -41,3 +43,11 @@ class PostsDB:
     def get_post_subs(post_id: int):
         post = posts_collection.find_one({"id": post_id})
         return post.get('comment_subscribers')
+
+    @staticmethod
+    def count_last_24h(telegram_id: int) -> int:
+        since = datetime.now(timezone.utc) - timedelta(hours=24)
+        return posts_collection.count_documents({
+            "telegram_id": telegram_id,
+            "publish_at": {"$gte": since}
+        })
