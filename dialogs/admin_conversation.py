@@ -28,16 +28,6 @@ async def admin_contact(cb: CallbackQuery, state: FSMContext):
     await cb.answer()
 
 
-@router.message(MsgToAdmin.message_text)
-async def handle_msg_to_admin(message: Message, state: FSMContext):
-    await message.bot.send_message(
-        chat_id=config.ADMIN,
-        text=f"Сообщение от {message.from_user.id}:\n\n{message.text}"
-    )
-    await message.answer("Ваше сообщение отправлено администратору")
-    await state.clear()
-
-
 @router.message(Command("admin_contact"))
 async def admin_contact(message: Message, state: FSMContext):
     await message.answer("Введите текст сообщения для администратора:")
