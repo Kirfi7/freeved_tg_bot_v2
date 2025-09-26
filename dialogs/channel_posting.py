@@ -93,7 +93,7 @@ async def handle_publication_text(message: Message, state: FSMContext):
 async def get_comment_object(message: Message):
     if message.reply_to_message:
         post_id = message.reply_to_message.forward_from_message_id
-        link = F'https://t.me/с/{config.LINK_ID}/{post_id}'
+        link = F'https://t.me/c/{config.LINK_ID}/{post_id}'
 
         post_object = PostsDB.get_post_by_tg(post_id)
 
