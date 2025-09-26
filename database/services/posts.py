@@ -45,9 +45,10 @@ class PostsDB:
         return post.get('comment_subscribers')
 
     @staticmethod
-    def count_last_24h(telegram_id: int) -> int:
+    def count_last_24h(author_id: int) -> int:
         since = datetime.now(timezone.utc) - timedelta(hours=24)
         return posts_collection.count_documents({
-            "telegram_id": telegram_id,
+            "author_id": author_id,
+            "is_published": True,
             "publish_at": {"$gte": since}
         })
