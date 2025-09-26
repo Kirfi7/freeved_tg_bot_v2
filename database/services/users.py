@@ -17,10 +17,16 @@ class UsersDB:
 
     @staticmethod
     def ban_user(user_id):
-        print(user_id)
         return users_collection.update_one(
             {"telegram_id": user_id},
             {"$set": {"is_banned": True}}
+        )
+
+    @staticmethod
+    def unban_user(user_id: int):
+        return users_collection.update_one(
+            {"telegram_id": user_id},
+            {"$set": {"is_banned": False}}
         )
 
     @staticmethod
