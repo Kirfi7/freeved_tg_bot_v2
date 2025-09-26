@@ -15,9 +15,6 @@ class AdminFSM(StatesGroup):
 def _is_admin(uid: int) -> bool:
     return int(uid) == int(config.ADMIN)
 
-# ==========================
-# Вариант 1 — КНОПКИ МЕНЮ
-# ==========================
 
 @router.callback_query(F.data == "user_ban")
 async def cb_ban(cb: CallbackQuery, state: FSMContext):
