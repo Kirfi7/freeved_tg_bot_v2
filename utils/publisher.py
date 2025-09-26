@@ -1,5 +1,3 @@
-from importlib.metadata import always_iterable
-
 import config
 
 from aiogram import Bot
