@@ -1,5 +1,7 @@
 from aiogram.filters import BaseFilter
 from aiogram.types import Message, CallbackQuery
+from aiogram.types import BotCommand, BotCommandScopeAllPrivateChats, BotCommandScopeAllChatAdministrators
+import config
 
 
 class MessangerRequest(BaseFilter):
@@ -14,6 +16,29 @@ class MessangerRequest(BaseFilter):
                 return {"target_tg_id": int(user)}
             return False
         except: return False
+
+    @staticmethod
+    async def start(message: Message):
+        bot = message.bot
+
+        if message.from_user.id == config.ADMIN:
+            # Команды для админов
+            await bot.set_my_commands(
+                commands=[
+                    BotCommand(command="ban", description="Забанить"),
+                    BotCommand(command="unban", description="Разбанить"),
+                    BotCommand(command="start", description="Старт"),
+                ],
+                scope=BotCommandScopeAllChatAdministrators(),
+            )
+        else:
+            await bot.set_my_commands(
+                commands=[
+                    BotCommand(command="start", description="Старт"),
+                ],
+                scope=BotCommandScopeAllPrivateChats(),
+            )
+
 
 
 class MessangerAccepted(BaseFilter):
