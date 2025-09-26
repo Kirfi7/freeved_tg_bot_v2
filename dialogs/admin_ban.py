@@ -21,7 +21,7 @@ async def cb_ban(cb: CallbackQuery, state: FSMContext):
     if not _is_admin(cb.from_user.id):
         return await cb.answer("Нет прав", show_alert=True)
     await state.set_state(AdminFSM.waiting_ban_id)
-    await cb.message.answer("Введите telegram_id для блокировки:", reply_markup=ForceReply())
+    await cb.message.answer("Введите индентификатор пользователя для блокировки:", reply_markup=ForceReply())
     await cb.answer()
 
 
@@ -30,7 +30,7 @@ async def cb_unban(cb: CallbackQuery, state: FSMContext):
     if not _is_admin(cb.from_user.id):
         return await cb.answer("Нет прав", show_alert=True)
     await state.set_state(AdminFSM.waiting_unban_id)
-    await cb.message.answer("Введите telegram_id для разблокировки:", reply_markup=ForceReply())
+    await cb.message.answer("Введите индентификатор пользователя для разблокировки:", reply_markup=ForceReply())
     await cb.answer()
 
 
