@@ -3,7 +3,7 @@ from aiogram.types import CallbackQuery
 
 from database.services.posts import PostsDB
 from database.services.users import UsersDB
-from utils.publisher import Publisher
+from utils.publisher import Publisher, bot
 
 router = Router()
 
@@ -12,17 +12,27 @@ router = Router()
 async def publish(call: CallbackQuery):
     await call.message.delete_reply_markup()
     _, post_id = call.data.split(":")
-    publisher = Publisher(int(post_id))
+    post_id = int(post_id)
+    author_id = PostsDB.get_post(post_id).author_id
+
+    publisher = Publisher(post_id)
     await publisher.to_prod()
+
     await call.message.reply("Сообщение успешно отправлено!")
+    await call.bot.send_message(author_id, "Ваш пост был опубликован!")
 
 
 @router.callback_query(F.data.startswith("delete"))
 async def cancel(call: CallbackQuery):
     await call.message.delete_reply_markup()
     _, post_id = call.data.split(":")
-    PostsDB.del_post(int(post_id))
+    post_id = int(post_id)
+    author_id = PostsDB.get_post(post_id).author_id
+
+    PostsDB.del_post(post_id)
+
     await call.message.reply("Сообщение успешно удалено!")
+    await call.bot.send_message(author_id, "Ваш пост не прошёл модерацию.")
 
 
 @router.callback_query(F.data.startswith("ban"))

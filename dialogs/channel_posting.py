@@ -3,6 +3,7 @@ from aiogram.types import CallbackQuery, Message
 from aiogram.filters import StateFilter
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.context import FSMContext
+from pydantic.v1.class_validators import all_kwargs
 
 from database.models import PostInit, PostAttachment
 from database.services.users import UsersDB
@@ -72,13 +73,20 @@ async def handle_publication_text(message: Message, state: FSMContext):
     )
     post_id = PostsDB.init_post(post_data)
     pub_count = UsersDB.get_messages_count(message.from_user.id)
+    is_banned = UsersDB.is_banned(message.from_user.id)
     print("pub_count", pub_count)
 
     publisher = Publisher(post_id)
 
-    if pub_count > 2:
+    # выбор
+    if is_banned:
+        return await message.answer('Вы были заблокированы. Обратитесь к Администратору: @kirfi777.')
+    elif pub_count <= 2:
+        await message.answer('Ваш пост отправлен на модерацию. Ожидайте подтверждения.')
         return await publisher.to_prod()
-    return await publisher.to_admin()
+    else:
+        await message.answer('Ваш пост успешно опубликован!')
+        return await publisher.to_admin()
 
 
 @router.message(F.chat.id == config.GROUP)
