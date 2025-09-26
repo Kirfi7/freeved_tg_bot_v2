@@ -20,7 +20,7 @@ async def publish(call: CallbackQuery):
     msg_id = await publisher.to_prod()
 
     await call.message.reply("Сообщение успешно отправлено!")
-    await call.bot.send_message(author_id, f'Ваш пост успешно опубликован! Ссылка на пост: {get_link(msg_id)}')
+    await call.bot.send_message(author_id, f'Ваш пост успешно опубликован!\nСсылка на пост: {get_link(msg_id)}')
 
 
 @router.callback_query(F.data.startswith("delete"))
