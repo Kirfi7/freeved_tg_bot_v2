@@ -10,7 +10,7 @@ from database.services.users import UsersDB
 from database.services.posts import PostsDB
 
 from markups import get_choice_markup
-from utils.link import get_link
+from utils.link import get_link, build_comment_link
 from utils.notifier import Notifier
 from utils.publisher import Publisher
 
@@ -98,12 +98,13 @@ async def handle_publication_text(message: Message, state: FSMContext):
 
 @router.message(F.chat.id == config.GROUP)
 async def get_comment_object(message: Message):
-    if message.reply_to_message:
-        post_id = message.reply_to_message.forward_from_message_id
+    if not message.reply_to_message:
+        return
 
-        post_object = PostsDB.get_post_by_tg(post_id)
+    post_id = message.reply_to_message.forward_from_message_id
+    post_object = PostsDB.get_post_by_tg(post_id)
 
-        notifier = Notifier(post_object.get("id"))
-        await notifier.notify(message.from_user.id, get_link(post_id))
-    else:
-        pass
+    link = build_comment_link(message, post_id=post_id)
+
+    notifier = Notifier(post_object.get("id"))
+    await notifier.notify(message.from_user.id, link)
