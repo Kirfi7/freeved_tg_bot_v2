@@ -20,8 +20,8 @@ class Notifier:
             PostsDB.add_post_sub(self.post_id, comment_author_id)
 
         text = (
-            f'Под <a href="{hd.link(thread_link)}">постом</a> оставили новый комментарий.\n'
-            f'<a href="{hd.link(comment_link)}">Открыть</a>.'
+            f'Под {hd.link(thread_link, 'постом')} оставили новый комментарий.\n'
+            f'{hd.link(comment_link, 'Открыть')}.'
         )
 
         for subscriber in subscribers:
