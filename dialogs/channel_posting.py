@@ -107,4 +107,4 @@ async def get_comment_object(message: Message):
     link = build_comment_link(message, post_id=post_id)
 
     notifier = Notifier(post_object.get("id"))
-    await notifier.notify(message.from_user.id, link)
+    await notifier.notify(message.from_user.id, get_link(post_id), link)

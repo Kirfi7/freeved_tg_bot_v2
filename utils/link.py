@@ -33,10 +33,12 @@ def build_comment_link(message: Message, *, post_id: int,
     comment_id = message.message_id
 
     if channel_username:
+        # публичный канал
         return (
             f"https://t.me/{channel_username}/{post_id}"
             f"?single&thread={thread_id}&comment={comment_id}"
         )
 
+    # приватная дискуссия
     short_id = _short_chat_id(message.chat.id)
-    return f"https://t.me/c/{short_id}/{thread_id}/{comment_id}"
+    return f"https://t.me/c/{short_id}/{comment_id}?thread={thread_id}"
