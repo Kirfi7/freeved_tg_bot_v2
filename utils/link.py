@@ -3,7 +3,7 @@ from aiogram.types import Message
 import config
 
 
-TELEGRAM = 'https://t.me/'
+TELEGRAM = 'https://t.me'
 
 
 def get_link(msg_id: int) -> str:
