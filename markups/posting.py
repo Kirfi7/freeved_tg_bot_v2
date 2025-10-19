@@ -16,3 +16,10 @@ async def get_approve_markup(post_id: int, user_id: int) -> InlineKeyboardMarkup
         [InlineKeyboardButton(text="Удалить и заблокировать", callback_data=f"ban:{post_id}:{user_id}")],
     ]
     return InlineKeyboardMarkup(inline_keyboard=buttons)
+
+
+async def get_autopublish_admin_markup(user_id: int) -> InlineKeyboardMarkup:
+    buttons = [
+        [InlineKeyboardButton(text="Отменить автопубликацию", callback_data=f"autopub_off:{user_id}")],
+    ]
+    return InlineKeyboardMarkup(inline_keyboard=buttons)

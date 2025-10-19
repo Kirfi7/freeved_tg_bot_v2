@@ -48,3 +48,11 @@ async def ban(call: CallbackQuery):
     PostsDB.del_post(int(post_id))
     UsersDB.ban_user(int(user_id))
     await call.message.reply("Сообщение успешно удалено! Пользователь заблокирован.")
+
+
+@router.callback_query(F.data.startswith("autopub_off"))
+async def disable_autopublish(call: CallbackQuery):
+    await call.message.delete_reply_markup()
+    _, user_id = call.data.split(":")
+    UsersDB.reset_autopublish_count(int(user_id))
+    await call.message.reply("Автопубликация для этого пользователя отменена (счётчик сброшен).")

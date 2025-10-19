@@ -6,7 +6,8 @@ from aiogram.types import InlineKeyboardMarkup
 from database.models import Post
 from database.services.posts import PostsDB
 from database.services.users import UsersDB
-from markups import get_approve_markup
+from markups import get_approve_markup, get_autopublish_admin_markup
+from utils.link import get_link
 
 bot = Bot(config.TOKEN)
 
@@ -37,6 +38,16 @@ class Publisher:
 
         msg_id = await self.__publish(config.CHANNEL, post, text)
         PostsDB.publish_post(post.id, msg_id)
+        # Инкремент счётчика автопубликаций пользователя
+        UsersDB.inc_autopublish_count(post.author_id, 1)
+        # Уведомление администратору об автопубликации с полной информацией и кнопкой отключения
+        admin_text = (
+            "Автопубликация\n\n" +
+            await self.__create_text(post, msgs_cnt + 1)
+        ).strip()
+        link_text = f"\n\nСсылка на пост: {get_link(msg_id)}"
+        markup = await get_autopublish_admin_markup(post.author_id)
+        await self.__publish(config.ADMIN, post, admin_text + link_text, markup)
         return msg_id
 
     @staticmethod

@@ -73,7 +73,8 @@ async def handle_publication_text(message: Message, state: FSMContext):
         comment_subscribers=[message.from_user.id,],
     )
     post_id = PostsDB.init_post(post_data)
-    pub_count = UsersDB.get_messages_count(message.from_user.id)
+    # Счётчик автопубликаций ведём в users, а не считаем по постам
+    pub_count = UsersDB.get_autopublish_count(message.from_user.id)
     is_banned = UsersDB.is_banned(message.from_user.id)
     print("pub_count", pub_count)
 
