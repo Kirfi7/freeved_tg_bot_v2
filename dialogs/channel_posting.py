@@ -88,7 +88,7 @@ async def handle_publication_text(message: Message, state: FSMContext):
     # выбор
     if is_banned:
         return await message.answer('Вы были заблокированы. Обратитесь к Администратору: @kirfi777.')
-    elif pub_count > 2:
+    elif pub_count > 0:
         msg_id = await publisher.to_prod()
         return await message.answer(f'Ваш пост успешно опубликован!\nСсылка на пост: {get_link(msg_id)}')
     else:
