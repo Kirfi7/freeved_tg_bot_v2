@@ -1,4 +1,4 @@
-DEBUG: bool = True
+DEBUG: bool = False
 
 if DEBUG:
     # тестовый
