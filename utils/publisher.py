@@ -27,7 +27,7 @@ class Publisher:
         markup = await get_approve_markup(post.id, post.author_id)
         await self.__publish(config.ADMIN, post, text, markup)
 
-    async def to_prod(self) -> int:
+    async def to_prod(self, *, autopublish: bool = False) -> int:
         """
         Публикует сообщение в канал
         """
@@ -38,16 +38,18 @@ class Publisher:
 
         msg_id = await self.__publish(config.CHANNEL, post, text)
         PostsDB.publish_post(post.id, msg_id)
-        # Инкремент счётчика автопубликаций пользователя
+        # Инкремент счётчика публикаций пользователя
         UsersDB.inc_autopublish_count(post.author_id, 1)
-        # Уведомление администратору об автопубликации с полной информацией и кнопкой отключения
-        admin_text = (
-            "Автопубликация\n\n" +
-            await self.__create_text(post, msgs_cnt + 1)
-        ).strip()
-        link_text = f"\n\nСсылка на пост: {get_link(msg_id)}"
-        markup = await get_autopublish_admin_markup(post.author_id)
-        await self.__publish(config.ADMIN, post, admin_text + link_text, markup)
+
+        # Уведомление администратору отправляем только при автопубликации
+        if autopublish:
+            admin_text = (
+                "Автопубликация\n\n" +
+                await self.__create_text(post, msgs_cnt + 1)
+            ).strip()
+            link_text = f"\n\nСсылка на пост: {get_link(msg_id)}"
+            markup = await get_autopublish_admin_markup(post.author_id)
+            await self.__publish(config.ADMIN, post, admin_text + link_text, markup)
         return msg_id
 
     @staticmethod
