@@ -32,7 +32,8 @@ class Publisher:
         """
         post = await self.__get_from_db()
         msgs_cnt = await self.__get_messages_count(post.author_id)
-        text = await self.__create_text(post, msgs_cnt + 1)
+        # Для канала публикуем только текст пользователя без служебной информации
+        text = await self.__create_text(post, msgs_cnt + 1, concise=True)
 
         msg_id = await self.__publish(config.CHANNEL, post, text)
         PostsDB.publish_post(post.id, msg_id)
@@ -72,7 +73,13 @@ class Publisher:
         return PostsDB.get_post(post_id=self.post_id)
 
     @staticmethod
-    async def __create_text(post, count) -> str:
+    async def __create_text(post, count, *, concise: bool = False) -> str:
+        if concise:
+            header = post.post_type or ""
+            body = post.post_text or ""
+            # В канал: только тип публикации и сам текст
+            return f"{header}\n\n{body}"
+
         text = (f'Номер сообщения: {post.id}\n'
                 f'Вид сообщения: {post.post_type}\n'
                 f'Кол-во сообщений пользователя: {count}\n'
